@@ -1,0 +1,27 @@
+//
+// Created by Anand Kumar on 9/25/25.
+//
+
+{
+  "expo": {
+    "name": "Counter Persist",
+    "slug": "counter-persist",
+    "scheme": "counterpersist",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "ios": { "supportsTablet": true },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0f172a"
+      }
+    }
+
+  }
+}
