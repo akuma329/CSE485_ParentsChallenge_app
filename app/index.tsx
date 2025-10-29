@@ -1,8 +1,35 @@
+import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>
+          <Ionicons name="menu" size={32} color="black" />
+        </TouchableOpacity>
+      </View>
+
+      {menuOpen && (
+        <View style={styles.menu}>
+          {["Parents", "Schools", "Resources", "Contact Us"].map((item) => (
+            <TouchableOpacity
+              key={item}
+              style={styles.menuItem}
+              onPress={() => {
+                setMenuOpen(false);
+              }}
+            >
+              <Text style={styles.menuText}>{item}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
+      {/* Main Buttons */}
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>About Us</Text>
       </TouchableOpacity>
@@ -25,15 +52,40 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#f5f5f5",
     paddingHorizontal: 20,
+    paddingTop: 60,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 30,
+  header: {
+    position: "absolute",
+    top: 40,
+    right: 20,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  menu: {
+    position: "absolute",
+    top: 80,
+    right: 20,
+    backgroundColor: "#ffffff",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 5,
+    zIndex: 10,
+  },
+  menuItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  menuText: {
+    fontSize: 16,
+    color: "#333",
   },
   button: {
     backgroundColor: "#0086b3",
@@ -43,6 +95,7 @@ const styles = StyleSheet.create({
     width: "80%",
     alignItems: "center",
     marginVertical: 10,
+    alignSelf: "center",
   },
   buttonText: {
     color: "#fff",
