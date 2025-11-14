@@ -1,5 +1,5 @@
 //about us page
-//Last edited: 11/13/2025 
+//Last edited: 11/13/2025
 //Edited by: Sheneeza
 
 import React, { useState } from 'react';
@@ -7,7 +7,7 @@ import { Text, StyleSheet, View } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
-const TextInANest = () => {
+const aboutUs = () => {
   const [titleText, setTitleText] = useState("About Us");
   const bodyText = 'Parents Challenge disrupts the legacy of educational failure by empowering parents. We provide our families with information, training, mentoring, tools, and financial resources to equip them to choose the education they think best for their children.';
   const [backButton, setBackButton] = useState(false);
@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
   
 });
 
-export default TextInANest;
+export default aboutUs;
 
 
