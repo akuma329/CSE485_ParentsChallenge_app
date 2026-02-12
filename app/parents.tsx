@@ -6,7 +6,6 @@ export default function Parents() {
 
   return (
     <View style={styles.container}>
-
       <TouchableOpacity
         style={styles.button}
         onPress={() => router.push("/parent_info" as any)}
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "80%",
-    backgroundColor: "#4a90e2",
+    backgroundColor: "#6699AB",
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: "center",

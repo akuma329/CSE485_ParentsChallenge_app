@@ -26,7 +26,9 @@ export default function Other_Resources() {
       <Pressable
         style={styles.button}
         onPress={() =>
-          Linking.openURL("https://parentschallenge.org/mental-health-resources/")
+          Linking.openURL(
+            "https://parentschallenge.org/mental-health-resources/",
+          )
         }
       >
         <Text style={styles.buttonText}>Mental Health</Text>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 260,
-    backgroundColor: "#6699AB", 
+    backgroundColor: "#6699AB",
     paddingVertical: 16,
     borderRadius: 20,
     marginVertical: 10,
