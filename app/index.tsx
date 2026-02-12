@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,6 +47,22 @@ export default function Index() {
         </View>
       )}
 
+      <Image
+        source={require("../assets/images/PC_Location-Logo_CO-100.jpg")}
+        style={styles.topImage}
+        resizeMode="contain"
+      />
+
+      <LinearGradient
+      colors={["#6696AB", "#3F6F80"]}
+      style={styles.banner}
+      >
+        <Text style={styles.bannerText}>
+          We see a tomorrow where all children have access to a quality education 
+          that meets their individual needs and prepares them to be productive, 
+          contributing citizens.
+        </Text>
+      </LinearGradient>
       
       <View style={styles.buttonGrid}>
         <TouchableOpacity
@@ -76,21 +93,6 @@ export default function Index() {
           <Text style={styles.buttonText}>Our Programs</Text>
         </TouchableOpacity>
       </View>
-
-      
-      <View style={styles.bottomButtons}>
-        <TouchableOpacity style={styles.bottomButton}>
-          <Text style={styles.bottomButtonText}>Calendar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.bottomButton}>
-          <Text style={styles.bottomButtonText}>BAND</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.bottomButton}>
-          <Text style={styles.bottomButtonText}>DonorView</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -98,7 +100,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   loginButton: {
-    backgroundColor: "#4a90e2",
+    backgroundColor: "#6696AB",
     paddingVertical: 6,
     paddingHorizontal: 14,
     borderRadius: 8,
@@ -151,14 +153,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    marginTop: 80,
+    marginTop: 50,
     gap: 15,
   },
   button: {
     width: "40%",
-    backgroundColor: "#4a90e2",
+    backgroundColor: "#6696AB",
     paddingVertical: 20,
     borderRadius: 10,
+    overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
     elevation: 2,
@@ -173,23 +176,29 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
   },
-  bottomButtons: {
-    marginTop: 40,
+  topImage: {
     width: "80%",
-    alignItems: "center",
+    height: 160,
+    marginTop: 0,
+    marginBottom: 10,
   },
-  bottomButton: {
-    backgroundColor: "#e1e1e1",
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    marginVertical: 8,
-  },
-  bottomButtonText: {
-    fontSize: 18,
-    color: "#333",
-    fontWeight: "500",
-  },
+  banner: {
+  marginTop: 30,
+  backgroundColor: "#364057",
+  padding: 20,
+  borderRadius: 0,
+  width: "100%",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+},
+bannerText: {
+  color: "#fff",
+  fontSize: 16,
+  fontWeight: "500",
+  textAlign: "center",
+  lineHeight: 22,
+},
 });

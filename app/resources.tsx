@@ -1,25 +1,45 @@
-import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import * as Linking from "expo-linking";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function Resources() {
-  const router = useRouter();
-
+export default function Other_Resources() {
   return (
     <View style={styles.container}>
-
-      <TouchableOpacity
+      <Pressable
         style={styles.button}
-        onPress={() => router.push("/tutoring")}
+        onPress={() =>
+          Linking.openURL("https://parentschallenge.org/parents/tutoring/")
+        }
       >
         <Text style={styles.buttonText}>Tutoring</Text>
-      </TouchableOpacity>
+      </Pressable>
 
-      <TouchableOpacity
+      <Pressable
         style={styles.button}
-        onPress={() => router.push("/other_resources")}
+        onPress={() =>
+          Linking.openURL("https://parentschallenge.org/sports-resources/")
+        }
       >
-        <Text style={styles.buttonText}>Other Resources</Text>
-      </TouchableOpacity>
+        <Text style={styles.buttonText}>Sports</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.button}
+        onPress={() =>
+          Linking.openURL("https://parentschallenge.org/mental-health-resources/")
+        }
+      >
+        <Text style={styles.buttonText}>Mental Health</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.button}
+        onPress={() =>
+          Linking.openURL("https://parentschallenge.org/parents/resources/")
+        }
+      >
+        <Text style={styles.buttonText}>More Resources</Text>
+      </Pressable>
     </View>
   );
 }
@@ -29,25 +49,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f9f9f9",
-    paddingHorizontal: 20,
   },
   button: {
-    width: "80%",
-    backgroundColor: "#4a90e2",
-    paddingVertical: 15,
-    borderRadius: 10,
-    alignItems: "center",
+    width: 260,
+    backgroundColor: "#6699AB", 
+    paddingVertical: 16,
+    borderRadius: 20,
     marginVertical: 10,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
   buttonText: {
-    color: "#fff",
+    color: "white",
     fontSize: 18,
     fontWeight: "600",
+    textAlign: "center",
   },
 });
