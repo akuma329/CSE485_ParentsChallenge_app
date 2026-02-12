@@ -1,11 +1,11 @@
 import { useRouter } from "expo-router";
 import {
-    FlatList,
-    Image,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { boardMembers } from "../../constants/boardMembers";
 
@@ -23,17 +23,22 @@ export default function Board() {
       )}
 
       <Text style={styles.name}>{item.name}</Text>
-      {item.years ? <Text style={styles.years}>{item.years}</Text> : null}
-      {item.subtitle ? (
-        <Text style={styles.subtitle}>{item.subtitle}</Text>
-      ) : null}
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push(`/board/${item.id}`)}  // 👈 key line
-      >
-        <Text style={styles.buttonText}>Read More</Text>
-      </TouchableOpacity>
+<Text style={[styles.years, !item.years && styles.hidden]}>
+  {item.years ?? " "}
+</Text>
+
+<Text style={[styles.subtitle, !item.subtitle && styles.hidden]}>
+  {item.subtitle ?? " "}
+</Text>
+
+<TouchableOpacity
+  style={styles.button}
+  onPress={() => router.push(`/board/${item.id}`)}
+>
+  <Text style={styles.buttonText}>Read More</Text>
+</TouchableOpacity>
+
     </View>
   );
 
@@ -138,6 +143,10 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: "#374151",
   },
+  hidden: {
+  opacity: 0,
+},
+
   buttonText: {
     color: "#FFFFFF",
     fontSize: 13,
