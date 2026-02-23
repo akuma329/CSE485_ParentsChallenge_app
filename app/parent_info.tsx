@@ -41,7 +41,7 @@ export default function Parent_Info() {
 
       <View style={styles.middle}>
         <View style={styles.titleTextBox}>
-          <Text style={styles.title}>School Assessments</Text>
+          <Text style={styles.title}>SCHOOL ASSESSMENTS</Text>
         </View>
 
         <Text style={styles.basicText}>
@@ -51,14 +51,14 @@ export default function Parent_Info() {
           style={styles.button}
           onPress={() => Linking.openURL("https://schoolchoiceforkids.org/")}
         >
-          <Text style={styles.buttonText}>Public/Charter School Grades</Text>
+          <Text style={styles.buttonText}>PUBLIC/CHARTER SCHOOL GRADES</Text>
         </Pressable>
 
         <Pressable
           style={styles.button}
           onPress={() => Linking.openURL("http://www.homeschoolfacts.com/")}
         >
-          <Text style={styles.buttonText}>Homeschool Resources</Text>
+          <Text style={styles.buttonText}>HOMESCHOOL RESOURCES</Text>
         </Pressable>
 
         <Pressable
@@ -67,7 +67,7 @@ export default function Parent_Info() {
             Linking.openURL("https://www.privateschoolreview.com/")
           }
         >
-          <Text style={styles.buttonText}>Private School Review</Text>
+          <Text style={styles.buttonText}>PRIVATE SCHOOL REVIEW</Text>
         </Pressable>
       </View>
 
