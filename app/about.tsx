@@ -1,18 +1,18 @@
 //about us page
-//Last edited: 12/1/2025
+//Last edited: 2/24/2026
 //Edited by: Sheneeza
 
 import React, { useState } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, Image } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
 const aboutUs = () => {
   const [titleText, setTitleText] = useState("About Us");
   const [whoWeAreText, setWhoWeAreText] = useState("The Mission");
-  const missionText = 'Parents Challenge disrupts the legacy of educational failure by empowering parents. We provide our families with information, training, mentoring, tools, and financial resources to equip them to choose the education they think best for their children.\n\nChoice and freedom are enshrined in virtually all aspects of American society. Why not in education, especially for low-income families, for whom education offers the greatest hope for economic advancement?';
+  const missionText = 'Parents Challenge disrupts the legacy of educational failure by empowering parents. We provide our families with information, training, mentoring, tools, and financial resources to equip them to choose the education they think best for their children.';
   const [backButton, setBackButton] = useState(false);
-  const [ourFoudningPrinciplesTitle, setOurFoudningPrinciplesTitle] = useState("Our Founding Principles");
+
   const makingADifference1 = 'Founded in 2000 by Steve & Joyce Schuck, Parents Challenge provides families with tools and resources to exercise educational choice to achieve academic success. Parents Challenge has provided educational choice to nearly 4,000 students and their families. Over two million dollars have been disbursed in scholarships and grants to ensure that choice is never limited to only those of means. As they take responsibility for their children’s education, parents have also taken more control of their own lives. Parents Challenge students have prospered, gaining the confidence and skills to succeed in life. \n\nTwenty-two years of measuring academic performance have taught us that empowered parents and guardians working through the support system of our programs have dramatically improved their lives and those of their children. Through the work of Parents Challenge, families have been transformed and they, as well as our community, are better off as a result.';
 
   const [standardsOfExcellenceTitle, setstandardsOfExcellenceTitle] = useState("Our Standards of Excellence");
@@ -34,56 +34,64 @@ const aboutUs = () => {
   "Most importantly, we are committed to making these beliefs real and available to families in Colorado Springs and, ultimately, across the country."
   ];
 
+  
+  //images
+  const Absenteeism = () => {
+    return (
+      <View style={styles.container}>
+        <Image 
+        style={styles.image}
+        source={require('../assets/images/pc_chronic_absenteeism.png')}
+        />
+      </View>
+      );
+  };
 
-
+  //display
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>{titleText}</Text>
-        </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>{titleText}</Text>
+          </View>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.whoWeAre}>{whoWeAreText}</Text>
-        </View>
+          <View style={styles.bodyContainer}>
+            <Text style={styles.makingADifference1}>
+              {makingADifference1}
+            </Text>
+          </View>
 
-        <View style={styles.bodyContainer}>
-          <Text style={styles.missionText}>{missionText}</Text>
-        </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.whoWeAre}>{whoWeAreText}</Text>
+          </View>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.whoWeAre}>{ourFoudningPrinciplesTitle}</Text>
-        </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.missionText}>{missionText}</Text>
+          </View>
 
-        {/*insert founding principles in bullets*/}
+          <View style={styles.titleContainer}>
+            <Text style={styles.standardsOfExcellenceTitle}>
+              {standardsOfExcellenceTitle}
+            </Text>
+          </View>
 
-        <View style={styles.titleContainer}>
-          <Text style={styles.standardsOfExcellenceTitle}>{standardsOfExcellenceTitle}</Text>
-        </View>
+          {standardsOfExcellence.map((item, index) => (
+            <Text key={index} style={styles.standardsOfExcellence}>
+              {item}
+            </Text>
+          ))}
 
+          <View style={styles.titleContainer}>
+            <Absenteeism />
+          </View>
 
-        {standardsOfExcellence.map((item, index) => (
-          <Text key={index} style={styles.standardsOfExcellence}>
-              ‣ {item}
-        </Text>
-
-
-        
-))}
-
-        <View style={styles.bodyContainer}>
-          <Text style={styles.makingADifference1}>{makingADifference1}</Text>
-        </View>
-
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
-
-  
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -92,37 +100,43 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: '#ffffff'
   },
+
+  scrollContainer: {
+    paddingBottom: 40,
+  },
+
   titleContainer: {
-    width: '100%',        
-    alignItems: 'center', 
+    width: '100%',
+    alignItems: 'center',
     marginBottom: 20,
   },
+
   titleText: {
     fontSize: 32,
     fontWeight: 'bold',
   },
 
   bodyContainer: {
-    backgroundColor: '#48a4bdff', 
-    borderRadius: 5,          
-    alignSelf: 'stretch',  
-    padding: 20,      
-    marginBottom: 12, 
+    backgroundColor: '#48a4bdff',
+    borderRadius: 5,
+    alignSelf: 'stretch',
+    padding: 20,
+    marginBottom: 12,
   },
 
   missionText: {
     fontSize: 16,
-    textAlign: 'left', 
-    color: '#ffffff',  
+    textAlign: 'left',
+    color: '#000000ff',
   },
 
   makingADifference1: {
-  fontSize: 16,
-  color: '#ffffff',
-  textAlign: 'left',
-},
+    fontSize: 16,
+    color: '#ffffff',
+    textAlign: 'left',
+  },
 
-standardsOfExcellenceTitle: {
+  standardsOfExcellenceTitle: {
     fontSize: 25,
     fontWeight: 'bold',
   },
@@ -133,10 +147,16 @@ standardsOfExcellenceTitle: {
     marginTop: 8,
     marginBottom: 12,
   },
-  
+
   whoWeAre: {
     fontSize: 25,
     fontWeight: 'bold',
+  },
+
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
   },
 });
 
