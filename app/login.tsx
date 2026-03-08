@@ -1,4 +1,9 @@
 import { router } from "expo-router";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile
+} from "firebase/auth";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -7,6 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { auth } from "../firebaseConfig";
 
 export default function Login() {
   const [isCreateAccount, setIsCreateAccount] = useState(false);
@@ -23,45 +29,77 @@ export default function Login() {
 
   const [statusMessage, setStatusMessage] = useState("");
 
-  const handleLogin = () => {
+  //make the function asynchronous to ensure login doesn't freeze the app
+  const handleLogin = async () => {
     if (loginEmail.trim() && loginPassword.trim()) {
-      console.log("Logging in with:", loginEmail, loginPassword);
-
-      // Clear login fields
-      setLoginEmail("");
-      setLoginPassword("");
-
-      // Go back to home page
-      router.replace("/");
+      try {
+        //send a request to Firebase and receive a package with user info
+        const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+        console.log("Logged in as: ", userCredential.user.email);
+        
+        // Clear login fields
+        setLoginEmail("");
+        setLoginPassword("");
+        
+        // Go back to home page
+        router.replace("/");
+      }
+      catch (error: any) {
+        //if invalid credential, notify user
+        if (error.code === 'auth/invalid-credential') {
+          setStatusMessage("Invalid email or password");
+        } else {
+          setStatusMessage("Login failed. Please try again.");
+        }
+        console.error(error.code);
+      }
     } else {
       setStatusMessage("Please fill out all fields.");
     }
   };
 
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
     if (
       signupUsername.trim() &&
       signupEmail.trim() &&
       signupPassword.trim() &&
       signupCode.trim()
     ) {
-      console.log(
-        "Creating account with:",
-        signupUsername,
-        signupEmail,
-        signupPassword,
-        signupCode
-      );
+      
+      try {
+        //create a user 
+        const userCredential = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
 
-      // Clear signup fields
-      setSignupUsername("");
-      setSignupEmail("");
-      setSignupPassword("");
-      setSignupCode("");
 
-      // Show success and switch back to login
-      setStatusMessage("Account created! Please log in.");
-      setIsCreateAccount(false);
+        //add username to firebase profile
+        await updateProfile(userCredential.user, {
+          displayName: signupUsername
+        });
+
+        console.log("Account created for: ", signupUsername);
+        
+        // Clear signup fields
+        setSignupUsername("");
+        setSignupEmail("");
+        setSignupPassword("");
+        setSignupCode("");
+              
+        // Show success and switch back to login
+        setStatusMessage("Account created! Please log in.");
+        setIsCreateAccount(false);
+      }
+      catch (error : any) {
+        if (error.code === 'auth/email-already-in-use') {
+          setStatusMessage("That email is already in use");
+        }
+        else if (error.code === 'auth/weak-password') {
+          setStatusMessage("Password should be at least 6 characters");
+        }
+        else {
+          setStatusMessage("Signup failed. Please check connection and try again.");
+        }
+        console.error(error.code);
+      }
     } else {
       setStatusMessage("Please fill out all fields.");
     }
