@@ -1,9 +1,4 @@
 import { router } from "expo-router";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile
-} from "firebase/auth";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -30,7 +25,7 @@ export default function Login() {
   const [statusMessage, setStatusMessage] = useState("");
 
   //make the function asynchronous to ensure login doesn't freeze the app
-  const handleLogin = async () => {
+  /*const handleLogin = async () => {
     if (loginEmail.trim() && loginPassword.trim()) {
       try {
         //send a request to Firebase and receive a package with user info
@@ -56,8 +51,14 @@ export default function Login() {
     } else {
       setStatusMessage("Please fill out all fields.");
     }
-  };
-
+  };*/
+ const handleLogin = async () => {
+  if (loginEmail.trim() && loginPassword.trim()) {
+    router.replace("/uplanding");
+  } else {
+    setStatusMessage("Please fill out all fields.");
+  }
+};
   const handleCreateAccount = async () => {
     if (
       signupUsername.trim() &&

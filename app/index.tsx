@@ -1,8 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -81,10 +81,10 @@ export default function Index() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("/events")}
-        >
-          <Text style={styles.buttonText}>Events</Text>
-        </TouchableOpacity>
+          onPress={() => Linking.openURL("https://parentschallenge.org/events-activities/")}
+    >
+  <Text style={styles.buttonText}>Events</Text>
+</TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
