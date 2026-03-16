@@ -1,20 +1,20 @@
 import { Stack } from "expo-router";
 import {
-    Alert,
-    Image,
-    Linking,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    useWindowDimensions,
-    View,
+  Alert,
+  Image,
+  Linking,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
 } from "react-native";
 
 
 const NON_PROFIT_ANALYSIS_2021_URL = "https://parentschallenge.org/wp-content/uploads/2021/03/Parents-Challenge-2021-Analytics.pdf";
 const NON_PROFIT_ANALYSIS_2022_URL = "https://parentschallenge.org/wp-content/uploads/2023/05/Parents-Challenge-2022-Annual-Report-1.pdf";
-const APPLICATION_URL = "https://parentschallenge.org";
+const APPLICATION_URL = "https://parentschallenge.org/apply/financial-aid/";
 
 
 const HERO_BANNER = require("../../assets/programs/program-banner.jpg");
