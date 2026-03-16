@@ -1,5 +1,5 @@
 //about us page
-//Last edited: 3/15/2026
+//Last edited: 3/16/2026
 //Edited by: Sheneeza
 
 import React, { useState } from 'react';
@@ -34,29 +34,44 @@ const aboutUs = () => {
   "Most importantly, we are committed to making these beliefs real and available to families in Colorado Springs and, ultimately, across the country."
   ];
 
-  const chronicAbsentText = "Chronic Absenteeism";
+  const chronicAbsentText = "Our Statistics";
   const proficiencyRateText = "Proficiency Rate";
 
   
   //images
   const Absenteeism = () => {
-    return (
-      <View style={styles.container}>
-        <Image 
-        style={styles.image}
-        source={require('../assets/images/pc_chronic_absenteeism.png')}
-        />
-      </View>
-      );
-  };
+  return (
+    <Image 
+      style={styles.image}
+      source={require('../assets/images/pc_chronic_absenteeism.png')}
+    />
+  );
+};
   const Proficiency = () => {
     return (
-      <View style={styles.container}>
         <Image 
         style={styles.image}
         source={require('../assets/images/pc_proficiency_rate.png')}
         />
-      </View>
+      );
+  };
+
+
+  const Familiesserved = () => {
+    return (
+        <Image 
+        style={styles.image}
+        source={require('../assets/images/familiesserved.png')}
+        />
+      );
+  };
+
+  const Mathreadingstats = () => {
+    return (
+        <Image 
+        style={styles.image}
+        source={require('../assets/images/mathreadingstats.png')}
+        />
       );
   };
 
@@ -104,16 +119,20 @@ const aboutUs = () => {
             <Text style={styles.whoWeAre}>{chronicAbsentText}</Text>
           </View>
 
-          <View style={styles.titleContainer}>
+          <View style={styles.imageContainer}>
             <Absenteeism />
           </View>
-
-          <View style={styles.titleContainer}>
-            <Text style={styles.whoWeAre}>{proficiencyRateText}</Text>
-          </View>
           
-          <View style={styles.titleContainer}>
+          <View style={styles.imageContainer}>
             <Proficiency />
+          </View>
+
+          <View style={styles.imageContainer}>
+            <Familiesserved />
+          </View>
+
+          <View style={styles.imageContainer}>
+            <Mathreadingstats />
           </View>
 
         </ScrollView>
@@ -182,11 +201,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  image: {
-    width: 350,
-    height: 350,
-    resizeMode: 'contain',
-  },
+imageContainer: {
+  alignItems: 'center',
+  marginBottom: 20,
+},
+
+image: {
+  width: '100%',
+  height: undefined,
+  aspectRatio: 1.8, 
+  resizeMode: 'contain',
+}
 });
 
 export default aboutUs;
