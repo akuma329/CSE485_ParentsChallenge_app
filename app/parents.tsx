@@ -1,5 +1,11 @@
 import { useRouter } from "expo-router";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Parents() {
   const router = useRouter();
@@ -14,15 +20,19 @@ export default function Parents() {
       </TouchableOpacity>
 
       <TouchableOpacity
-      style={styles.button}
-        onPress={() => Linking.openURL("https://parentschallenge.org/events/month/")}
-  >
-     <Text style={styles.buttonText}>Empowerment Sessions</Text>
-  </TouchableOpacity>
+        style={styles.button}
+        onPress={() => router.push("/empowerment_sessions" as any)}
+      >
+        <Text style={styles.buttonText}>Empowerment Sessions</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/videos" as any)}
+        onPress={() =>
+          Linking.openURL(
+            "https://www.youtube.com/channel/UCQ-QKYDWD2Ld0I5YZdgOQ9A/videos",
+          )
+        }
       >
         <Text style={styles.buttonText}>Videos</Text>
       </TouchableOpacity>

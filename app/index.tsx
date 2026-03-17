@@ -2,7 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Image, Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,7 +17,6 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>
           <Ionicons name="menu" size={32} color="black" />
@@ -24,7 +30,6 @@ export default function Index() {
         </TouchableOpacity>
       </View>
 
-      
       {menuOpen && (
         <View style={styles.menu}>
           {[
@@ -32,6 +37,7 @@ export default function Index() {
             { name: "Schools", route: "/schools" },
             { name: "Resources", route: "/resources" },
             { name: "Contact Us", route: "/contact" },
+            { name: "Settings", route: "/account_settings" },
           ].map((item) => (
             <TouchableOpacity
               key={item.name}
@@ -53,17 +59,14 @@ export default function Index() {
         resizeMode="contain"
       />
 
-      <LinearGradient
-      colors={["#6696AB", "#3F6F80"]}
-      style={styles.banner}
-      >
+      <LinearGradient colors={["#6696AB", "#3F6F80"]} style={styles.banner}>
         <Text style={styles.bannerText}>
-          We see a tomorrow where all children have access to a quality education 
-          that meets their individual needs and prepares them to be productive, 
-          contributing citizens.
+          We see a tomorrow where all children have access to a quality
+          education that meets their individual needs and prepares them to be
+          productive, contributing citizens.
         </Text>
       </LinearGradient>
-      
+
       <View style={styles.buttonGrid}>
         <TouchableOpacity
           style={styles.button}
@@ -81,10 +84,12 @@ export default function Index() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => Linking.openURL("https://parentschallenge.org/events-activities/")}
-    >
-  <Text style={styles.buttonText}>Events</Text>
-</TouchableOpacity>
+          onPress={() =>
+            Linking.openURL("https://parentschallenge.org/events-activities/")
+          }
+        >
+          <Text style={styles.buttonText}>Events</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
@@ -183,22 +188,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   banner: {
-  marginTop: 30,
-  backgroundColor: "#364057",
-  padding: 20,
-  borderRadius: 0,
-  width: "100%",
-  alignItems: "center",
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.2,
-  shadowRadius: 4,
-},
-bannerText: {
-  color: "#fff",
-  fontSize: 16,
-  fontWeight: "500",
-  textAlign: "center",
-  lineHeight: 22,
-},
+    marginTop: 30,
+    backgroundColor: "#364057",
+    padding: 20,
+    borderRadius: 0,
+    width: "100%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  bannerText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "500",
+    textAlign: "center",
+    lineHeight: 22,
+  },
 });
