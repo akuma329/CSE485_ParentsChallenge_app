@@ -19,7 +19,9 @@ export default function empowerment_sessions() {
   ];
 
   const openCalendar = () => {
-    Linking.openURL("https://parentschallenge.org/events/month/");
+    Linking.openURL(
+      "https://www.canva.com/design/DAGqD3cyJb4/hDFZbiQUJOQ4XZUtQnDfWw/view?utm_content=DAGqD3cyJb4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h9770dc33d6",
+    );
   };
 
   const openDonorView = () => {
