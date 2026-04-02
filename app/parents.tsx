@@ -14,7 +14,11 @@ export default function Parents() {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/parent_info" as any)}
+        onPress={() =>
+          Linking.openURL(
+            "https://www.canva.com/design/DAGGnx3Wj7Q/oGDOeHihX-xaIV5lHiNrYA/view?utm_content=DAGGnx3Wj7Q&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h9b6e85cad5",
+          )
+        }
       >
         <Text style={styles.buttonText}>Parents Info</Text>
       </TouchableOpacity>

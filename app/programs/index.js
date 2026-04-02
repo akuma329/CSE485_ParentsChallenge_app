@@ -11,11 +11,11 @@ import {
   View,
 } from "react-native";
 
-
-const NON_PROFIT_ANALYSIS_2021_URL = "https://parentschallenge.org/wp-content/uploads/2021/03/Parents-Challenge-2021-Analytics.pdf";
-const NON_PROFIT_ANALYSIS_2022_URL = "https://parentschallenge.org/wp-content/uploads/2023/05/Parents-Challenge-2022-Annual-Report-1.pdf";
+const NON_PROFIT_ANALYSIS_2021_URL =
+  "https://parentschallenge.org/wp-content/uploads/2021/03/Parents-Challenge-2021-Analytics.pdf";
+const NON_PROFIT_ANALYSIS_2022_URL =
+  "https://parentschallenge.org/wp-content/uploads/2023/05/Parents-Challenge-2022-Annual-Report-1.pdf";
 const APPLICATION_URL = "https://parentschallenge.org/apply/financial-aid/";
-
 
 const HERO_BANNER = require("../../assets/programs/program-banner.jpg");
 const TRANSPARENCY_BADGE = require("../../assets/programs/excellence-in-giving-transparent.png");
@@ -34,28 +34,28 @@ const activityCards = [
     title: "PARENTAL EMPOWERMENT",
     image: PARENTAL_EMPOWERMENT_ICON,
     description:
-      "Designed in collaboration with parents, our holistic Empowerment Sessions facilitate parental engagement in the educational process by teaching families to be stronger education consumers. Sessions provide information on educational resources, parenting skills, monitoring children's progress, selecting supplemental support and materials, and interacting with teachers, administrators, and education boards.",
+      "We conduct 30 to 40 parent sessions (held virtual and in-person during the evening) If in-person a child-care stipend and free dinner are provided.  Parents are taught how to become more self-sufficient while also becoming better education consumers and advocates.",
   },
   {
     id: "scholarships-grants",
     title: "SCHOLARSHIPS + GRANTS",
     image: SCHOLARSHIPS_GRANTS_ICON,
     description:
-      "Parents Challenge provides low-income families financial support for educational choice, whether it is private, public, charter public, or home school. Examples include partial private school tuition scholarships, tutoring, assessments, transportation, computers, and home school support. We also offer college scholarships for Character and Leadership and STEM career fields.",
+      "We provide financial support to low-income parents that can be used in private, traditional public, charter public or home school.",
   },
   {
     id: "student-services",
     title: "STUDENT SERVICES",
     image: STUDENT_SERVICES_ICON,
     description:
-      "Parents Challenge provides a wide range of services that assist with evaluation, monitoring, and improvement of academic and cognitive skills, as well as developing coping and life skills. We provide specialized student programs focused on Character, Leadership, STEM, and internship support. Students and parents are expected to record academic grades, standardized scores, and extracurricular activities each semester in a student journal.",
+      "We recommend resources to families can be used to improve academic and cognitive skills as well as development of coping and life skills.",
   },
   {
     id: "community-engagement",
     title: "COMMUNITY ENGAGEMENT",
     image: COMMUNITY_ENGAGEMENT_ICON,
     description:
-      "Parents Challenge facilitates outreach and collaboration with other service-providing organizations and companies throughout the community and country. We work to maximize resources, minimize duplication, and better support families. Empowerment sessions are made available to the public at no cost, and families are encouraged to give back through school or community volunteer service.",
+      "We reach out and collaborate with other service-providing organizations throughout the country and community to take maximum advantage of other resources while minimizing duplication, overlap, and inefficiencies.",
   },
 ];
 
@@ -88,12 +88,20 @@ const choiceCards = [
 function SectionTitle({ leftLine = true, rightLine = true, prefix, accent }) {
   return (
     <View style={styles.sectionTitleRow}>
-      {leftLine ? <View style={styles.sectionLine} /> : <View style={styles.sectionLineSpacer} />}
+      {leftLine ? (
+        <View style={styles.sectionLine} />
+      ) : (
+        <View style={styles.sectionLineSpacer} />
+      )}
       <Text style={styles.sectionTitleText}>
         <Text style={styles.sectionTitlePrefix}>{prefix} </Text>
         <Text style={styles.sectionTitleAccent}>{accent}</Text>
       </Text>
-      {rightLine ? <View style={styles.sectionLine} /> : <View style={styles.sectionLineSpacer} />}
+      {rightLine ? (
+        <View style={styles.sectionLine} />
+      ) : (
+        <View style={styles.sectionLineSpacer} />
+      )}
     </View>
   );
 }
@@ -109,7 +117,12 @@ function LinkButton({ label, onPress, secondary = false }) {
         pressed && styles.linkButtonPressed,
       ]}
     >
-      <Text style={[styles.linkButtonText, secondary && styles.linkButtonTextSecondary]}>
+      <Text
+        style={[
+          styles.linkButtonText,
+          secondary && styles.linkButtonTextSecondary,
+        ]}
+      >
         {label}
       </Text>
     </Pressable>
@@ -118,8 +131,17 @@ function LinkButton({ label, onPress, secondary = false }) {
 
 function ActivityCard({ item, fullWidth }) {
   return (
-    <View style={[styles.activityCard, fullWidth ? styles.activityCardFull : styles.activityCardHalf]}>
-      <Image source={item.image} style={styles.activityIcon} resizeMode="contain" />
+    <View
+      style={[
+        styles.activityCard,
+        fullWidth ? styles.activityCardFull : styles.activityCardHalf,
+      ]}
+    >
+      <Image
+        source={item.image}
+        style={styles.activityIcon}
+        resizeMode="contain"
+      />
       <Text style={styles.activityTitle}>{item.title}</Text>
       <Text style={styles.activityText}>{item.description}</Text>
     </View>
@@ -152,7 +174,7 @@ export default function ProgramsPage() {
     if (!url || !url.startsWith("http")) {
       Alert.alert(
         "Add the link first",
-        "Paste the correct website link into the constant at the top of this file."
+        "Paste the correct website link into the constant at the top of this file.",
       );
       return;
     }
@@ -186,51 +208,31 @@ export default function ProgramsPage() {
           />
 
           <View style={styles.introFrame}>
-            <SectionTitle prefix="OUR" accent="program" />
+            <SectionTitle prefix="OUR" accent="Programs" />
 
             <Text style={styles.programDescription}>
-              Parents Challenge disrupts the legacy of educational failure by
-              empowering parents. We provide our families with information,
-              training, mentoring, tools, and financial resources to equip them
-              to choose the education they think best for their children.
+              The Parents Challenge Fact Sheet. We empower parents with the
+              tools and resources to choose the best education for their K-12
+              children.
             </Text>
-
-            <Image
-              source={TRANSPARENCY_BADGE}
-              style={[styles.badgeImage, { width: badgeSize, height: badgeSize }]}
-              resizeMode="contain"
-            />
-
-            <View style={styles.analysisButtons}>
-              <LinkButton
-                label="2021 NON-PROFIT ANALYSIS"
-                onPress={() => openLink(NON_PROFIT_ANALYSIS_2021_URL)}
-              />
-              <LinkButton
-                label="2022 NON-PROFIT ANALYSIS"
-                onPress={() => openLink(NON_PROFIT_ANALYSIS_2022_URL)}
-              />
-            </View>
           </View>
 
           <View style={styles.bannerSection}>
             <Text style={styles.bannerSectionText}>
-              THE PARENTS CHALLENGE PROGRAM IS BUILT UPON FOUR KEY ACTIVITIES:
+              THE PARENTS CHALLENGE PROGRAM IS BUILT UPON FOUR KEY SERVICES:
             </Text>
           </View>
 
           <View style={styles.activitiesGrid}>
             {activityCards.map((item) => (
-              <ActivityCard
-                key={item.id}
-                item={item}
-                fullWidth={!isTablet}
-              />
+              <ActivityCard key={item.id} item={item} fullWidth={!isTablet} />
             ))}
           </View>
 
           <View style={styles.financialAidSection}>
-            <Text style={styles.majorSectionHeading}>FINANCIAL AID + PROGRAM CHOICES</Text>
+            <Text style={styles.majorSectionHeading}>
+              FINANCIAL AID + PROGRAM CHOICES
+            </Text>
 
             <View
               style={[
@@ -238,7 +240,13 @@ export default function ProgramsPage() {
                 { flexDirection: isTablet ? "row" : "column" },
               ]}
             >
-              <View style={[styles.infoCard, styles.criteriaCard, isTablet && styles.halfCard]}>
+              <View
+                style={[
+                  styles.infoCard,
+                  styles.criteriaCard,
+                  isTablet && styles.halfCard,
+                ]}
+              >
                 <Text style={styles.infoCardTitle}>Sample Income Criteria</Text>
 
                 {incomeCriteria.map((line) => (
@@ -263,7 +271,9 @@ export default function ProgramsPage() {
               </View>
 
               <View style={[styles.infoCard, isTablet && styles.halfCard]}>
-                <Text style={styles.infoCardTitle}>Parents can select one of three “Choices”</Text>
+                <Text style={styles.infoCardTitle}>
+                  Parents can select one of three “Choices”
+                </Text>
 
                 {choiceCards.map((choice) => (
                   <ChoiceCard
@@ -274,72 +284,6 @@ export default function ProgramsPage() {
                 ))}
               </View>
             </View>
-
-            <View style={styles.applicationCard}>
-              <Text style={styles.applicationText}>
-                The application is available on the website and is open year-round for new families.
-              </Text>
-
-              <LinkButton
-                label="OPEN APPLICATION WEBSITE"
-                onPress={() => openLink(APPLICATION_URL)}
-                secondary
-              />
-            </View>
-          </View>
-
-          <View
-            style={[
-              styles.testimonialSection,
-              { flexDirection: isTablet ? "row" : "column" },
-            ]}
-          >
-            <Image
-              source={ANKRUM_FAMILY_IMAGE}
-              style={[
-                styles.familyImage,
-                {
-                  height: familyImageHeight,
-                  width: isTablet ? "48%" : "100%",
-                },
-              ]}
-              resizeMode="cover"
-            />
-
-            <View style={[styles.testimonialTextContainer, { width: isTablet ? "48%" : "100%" }]}>
-              <Text style={styles.testimonialHeading}>ANKRUM FAMILY</Text>
-
-              <Text style={styles.testimonialText}>
-                We stumbled upon Parents Challenge unexpectedly, but have been so
-                grateful ever since. Parents Challenge sessions and financial aid
-                have been a huge blessing to our homeschooling family. Due to
-                Parents Challenge’s financial resources, all four of our kids have
-                been able to participate in speech and debate. They’ve enjoyed
-                competing and learning, and we’re so grateful for how this has given
-                them a voice and taught them how to use it in a way that impacts
-                their culture.
-              </Text>
-
-              <Text style={styles.testimonialText}>
-                Nathaniel (’17) and his wife live and work on a university campus in
-                southern California. Serena (’18) lives dually in Colorado and
-                Cambodia where she works at a children’s home. Sofia (’22) is
-                involved in speech during her last year of high school and is
-                considering a career in ASL interpretation. Michael (’24) is
-                attending a twice weekly homeschool program and is also participating
-                in speech and debate.
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.standardsSection}>
-            <Text style={styles.majorSectionHeading}>STANDARDS OF EXCELLENCE</Text>
-
-            <Image
-              source={STANDARDS_OF_EXCELLENCE_IMAGE}
-              style={[styles.standardsImage, { height: standardsImageHeight }]}
-              resizeMode="contain"
-            />
           </View>
         </View>
       </ScrollView>
