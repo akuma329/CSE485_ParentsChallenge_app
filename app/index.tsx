@@ -1,19 +1,55 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  Dimensions,
   Image,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 
+const { width } = Dimensions.get("window");
+const CAROUSEL_WIDTH = width - 40;
+
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const scrollRef = useRef<ScrollView>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const carouselImages = [
+    require("../assets/images/carouselpic1.jpeg"),
+    require("../assets/images/carouselpic2.jpeg"),
+    require("../assets/images/carouselpic3.jpeg"),
+    require("../assets/images/carouselpic4.jpeg"),
+    require("../assets/images/carouselpic5.jpeg"),
+    require("../assets/images/carouselpic6.jpeg"),
+    require("../assets/images/carouselpic7.jpeg"),
+    require("../assets/images/carouselpic8.jpeg"),
+    require("../assets/images/carouselpic9.jpeg"),
+    require("../assets/images/carouselpic10.jpeg"),
+    require("../assets/images/carouselpic11.jpeg"),
+    
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % carouselImages.length;
+      setActiveIndex(nextIndex);
+
+      scrollRef.current?.scrollTo({
+        x: nextIndex * CAROUSEL_WIDTH,
+        animated: true,
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [activeIndex]);
 
   return (
     <View style={styles.container}>
@@ -58,6 +94,43 @@ export default function Index() {
         style={styles.topImage}
         resizeMode="contain"
       />
+
+      {/* PHOTO CAROUSEL */}
+      <View style={styles.carouselContainer}>
+        <ScrollView
+          ref={scrollRef}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(event) => {
+            const index = Math.round(
+              event.nativeEvent.contentOffset.x / CAROUSEL_WIDTH
+            );
+            setActiveIndex(index);
+          }}
+        >
+          {carouselImages.map((image, index) => (
+            <Image
+              key={index}
+              source={image}
+              style={styles.carouselImage}
+              resizeMode="cover"
+            />
+          ))}
+        </ScrollView>
+
+        <View style={styles.dotsContainer}>
+          {carouselImages.map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.dot,
+                activeIndex === index && styles.activeDot,
+              ]}
+            />
+          ))}
+        </View>
+      </View>
 
       <LinearGradient colors={["#6696AB", "#3F6F80"]} style={styles.banner}>
         <Text style={styles.bannerText}>
@@ -187,8 +260,37 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginBottom: 10,
   },
+  carouselContainer: {
+    width: "100%",
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  carouselImage: {
+    width: CAROUSEL_WIDTH,
+    height: 180,
+    borderRadius: 12,
+    marginRight: 0,
+  },
+  dotsContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    justifyContent: "center",
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#c4c4c4",
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: "#6696AB",
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
   banner: {
-    marginTop: 30,
+    marginTop: 10,
     backgroundColor: "#364057",
     padding: 20,
     borderRadius: 0,
