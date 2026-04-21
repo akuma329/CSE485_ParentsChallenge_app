@@ -1,4 +1,11 @@
 import { router } from "expo-router";
+import {
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  updateProfile
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -7,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { auth } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 
 export default function Login() {
   const [isCreateAccount, setIsCreateAccount] = useState(false);
@@ -17,7 +24,8 @@ export default function Login() {
   const [loginPassword, setLoginPassword] = useState("");
 
   // Signup fields
-  const [signupUsername, setSignupUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupCode, setSignupCode] = useState("");
@@ -25,23 +33,33 @@ export default function Login() {
   const [statusMessage, setStatusMessage] = useState("");
 
   //make the function asynchronous to ensure login doesn't freeze the app
-  /*const handleLogin = async () => {
+  const handleLogin = async () => {
     if (loginEmail.trim() && loginPassword.trim()) {
       try {
         //send a request to Firebase and receive a package with user info
-        const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-        console.log("Logged in as: ", userCredential.user.email);
-        
-        // Clear login fields
-        setLoginEmail("");
-        setLoginPassword("");
-        
-        // Go back to home page
-        router.replace("/");
+        const userCredential = await signInWithEmailAndPassword(auth, loginEmail.trim(), loginPassword);
+        const uid = userCredential.user.uid;
+
+        //search for the ID in the database
+        const userDoc = await getDoc(doc(db, "users", uid));
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+
+          if (userData.role === "admin") {
+            router.replace("/admin_dashboard");
+          }
+          else {
+            router.replace("/uplanding");
+          }
+        }
+        else {
+          setStatusMessage("User profile not found.");
+        }
       }
       catch (error: any) {
         //if invalid credential, notify user
-        if (error.code === 'auth/invalid-credential') {
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found') {
           setStatusMessage("Invalid email or password");
         } else {
           setStatusMessage("Login failed. Please try again.");
@@ -51,60 +69,87 @@ export default function Login() {
     } else {
       setStatusMessage("Please fill out all fields.");
     }
-  };*/
- const handleLogin = async () => {
-  if (loginEmail.trim() && loginPassword.trim()) {
-    router.replace("/uplanding");
-  } else {
-    setStatusMessage("Please fill out all fields.");
-  }
-};
+  };
+
   const handleCreateAccount = async () => {
-    if (
-      signupUsername.trim() &&
-      signupEmail.trim() &&
-      signupPassword.trim() &&
-      signupCode.trim()
-    ) {
-      
+    //check if the necessary fields are filled out and store the email
+    if (firstName.trim() && lastName.trim() && signupEmail.trim() && signupPassword.trim()) {
+      const emailLower = signupEmail.toLowerCase().trim();
+
+      const fullName = `${firstName.trim()} ${lastName.trim()}`;
+
       try {
-        //create a user 
-        const userCredential = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
+        //check if the email is in the approved emails list and get a snapshot
+        const approvedRef = doc(db, "approvedEmails", emailLower);
+        const approvedSnap = await getDoc(approvedRef);
 
+        if (!approvedSnap.exists()) {
+          setStatusMessage("This email is not on the approved list. Contact an admin.");
+          return;
+        }
 
-        //add username to firebase profile
-        await updateProfile(userCredential.user, {
-          displayName: signupUsername
+        const approvedData = approvedSnap.data();
+
+        //create the user's authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, emailLower, signupPassword);
+        const uid = userCredential.user.uid;
+
+        //add the user to the database
+        await setDoc(doc(db, "users", uid), {
+          uid: uid,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: emailLower,
+          role: approvedData.role || "family",
+          isActive: true,
         });
 
-        console.log("Account created for: ", signupUsername);
-        
-        // Clear signup fields
-        setSignupUsername("");
+        //update the user's name
+        await updateProfile(userCredential.user, { displayName: fullName });
+
+        //clear fields
+        setFirstName("");
+        setLastName("");
         setSignupEmail("");
         setSignupPassword("");
-        setSignupCode("");
-              
-        // Show success and switch back to login
         setStatusMessage("Account created! Please log in.");
         setIsCreateAccount(false);
       }
+
       catch (error : any) {
         if (error.code === 'auth/email-already-in-use') {
           setStatusMessage("That email is already in use");
-        }
-        else if (error.code === 'auth/weak-password') {
+        } else if (error.code === 'auth/weak-password') {
           setStatusMessage("Password should be at least 6 characters");
-        }
-        else {
-          setStatusMessage("Signup failed. Please check connection and try again.");
+        } else {
+          setStatusMessage("Signup failed. Check connection.");
         }
         console.error(error.code);
       }
-    } else {
+    }
+    else {
       setStatusMessage("Please fill out all fields.");
     }
   };
+
+  const handleForgotPassword = async () => {
+      if (!loginEmail.trim()) {
+        setStatusMessage("Please enter your email first.");
+        return;
+      }
+      
+      try {
+        await sendPasswordResetEmail(auth, loginEmail.trim());
+        setStatusMessage("Reset link sent! Check your inbox.");
+      } catch (error: any) {
+        if (error.code === 'auth/user-not-found') {
+          setStatusMessage("No account found with this email.");
+        } else {
+          setStatusMessage("Error sending reset email.");
+        }
+        console.error(error.code);
+      }
+    };
 
   return (
     <View style={styles.container}>
@@ -120,9 +165,15 @@ export default function Login() {
         <>
           <TextInput
             style={styles.input}
-            placeholder="Username"
-            value={signupUsername}
-            onChangeText={setSignupUsername}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
           />
           <TextInput
             style={styles.input}
@@ -139,12 +190,6 @@ export default function Login() {
             onChangeText={setSignupPassword}
             secureTextEntry
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Authentication Code"
-            value={signupCode}
-            onChangeText={setSignupCode}
-          />
 
           <TouchableOpacity
             style={styles.primaryButton}
@@ -157,7 +202,7 @@ export default function Login() {
         <>
           <TextInput
             style={styles.input}
-            placeholder="Username or Email"
+            placeholder="Email Adress"
             value={loginEmail}
             onChangeText={setLoginEmail}
             autoCapitalize="none"
@@ -170,6 +215,13 @@ export default function Login() {
             onChangeText={setLoginPassword}
             secureTextEntry
           />
+
+          <TouchableOpacity
+          onPress={handleForgotPassword}
+          style={styles.forgotPasswordContainer}
+          >
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
             <Text style={styles.primaryButtonText}>Login</Text>
@@ -244,5 +296,16 @@ const styles = StyleSheet.create({
     color: BUTTON_COLOR,
     fontSize: 14,
     fontWeight: "500",
+  },
+  forgotPasswordContainer: {
+    alignSelf: "flex-end",
+    marginBottom: 15,
+    marginTop: -4,
+  },
+  forgotPasswordText: {
+    color: BUTTON_COLOR,
+    fontSize: 14,
+    fontWeight: "500",
+    textDecorationLine: "underline",
   },
 });

@@ -171,4 +171,30 @@ Dr. Lewis’s influence is rooted not just in her credentials but in her lived e
 She is certified in Emotional Intelligence (EQ-i), the Intercultural Development Inventory (IDI), and Myers-Briggs Type Indicator (MBTI), among others. Her scholarship has been featured in textbooks, peer-reviewed journals, and national publications. Recognized with numerous awards for excellence in education, leadership, and inclusion, Dr. Regina Lewis continues to shape the future—one voice, one leader, one academy at a time.`,
     image: require("../assets/board/regina.jpg"),
   },
+  {
+    id: "bill-cadman",
+    name: "BILL CADMAN",
+    subtitle: "",
+    years: "",
+    description: `Bill Cadman is a seasoned Colorado political figure, public affairs executive, and community leader whose career spans more than three decades of distinguished service in the private sector, the United States Army, and the halls of the Colorado State Capitol. Known for his principled conservatism, collegial leadership style, and deep roots in the Pikes Peak region, Bill has left a lasting imprint on Colorado politics and public policy.
+
+Bill’s professional foundation was forged through his service in the US Army, where he served as a Classified Weapons Custodian and a Mountaineering & Survival Instructor — roles that reflect both his technical discipline and his enduring affinity for Colorado’s mountain landscape. He earned a Bachelor of Arts in Business Administration and Marketing from California State University, which launched his early career in the private sector.
+
+In 1992, Bill joined LifeSkills of Colorado Springs as Director of Development, channeling his business acumen toward nonprofit mission work. This was followed by seven years as District Office Manager for U.S. Representative Joel Hefley in Colorado Springs (1994–2000), where he gained invaluable insight into the mechanics of federal legislative affairs and constituent services — experience that would prove foundational to his own political career.
+
+Concurrent with his public service work, Bill founded and operated Advantage Marketing & Public Relations in Colorado Springs, operating the firm from 2000 through 2016 — demonstrating an entrepreneurial drive that ran parallel to his political career throughout his time in elected office.
+
+In 2001, Bill was elected to the Colorado House of Representatives, beginning a sixteen-year tenure in the Colorado General Assembly. He served as a State Representative from 2001 to 2008, representing the Colorado Springs area and establishing himself as a reliable conservative voice on fiscal responsibility, energy policy, and limited government.
+
+In 2008, Bill was elected to the Colorado State Senate, where he would rise to become one of the chamber’s most influential figures. He represented Senate District 12, which encompasses portions of El Paso County. Known for his sharp wit, mastery of parliamentary procedure, and ability to build coalitions, Bill earned the respect of colleagues on both sides of the aisle.
+
+His legislative career culminated in his election as President of the Colorado Senate. As Senate President, Bill presided over a Republican majority and guided consequential debates on the state budget, energy regulation, and education policy. His tenure was marked by a commitment to institutional integrity and a willingness to engage in substantive policy discourse.
+
+After being term-limited from the Colorado General Assembly in 2016, Bill transitioned to the corporate sector, joining Whiting Petroleum Corporation in Denver as Vice President of Corporate and Government Relations (2016–2019). In this role, he leveraged his extensive legislative relationships and policy expertise to navigate the complex regulatory and governmental landscape facing the energy industry in Colorado — a state where energy policy has long been a defining political battleground.
+
+In 2019, Bill established Capitol Advantage, operating as an independent Public Affairs Consultant. Drawing on decades of relationships across Colorado’s political, business, and civic communities, he provided strategic counsel to clients navigating state government and public affairs.
+
+Since 2021, Bill has served as CEO of The Schuck Initiatives, continuing his work at the intersection of public policy, advocacy, and community investment.`,
+    image: require("../assets/board/bill.jpg"),
+  },
 ];

@@ -1,5 +1,7 @@
+import { updatePassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
+  Alert,
   Modal,
   Pressable,
   StyleSheet,
@@ -7,6 +9,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { auth } from "../firebaseConfig";
 
 export default function account_settings() {
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
@@ -29,6 +32,37 @@ export default function account_settings() {
       showBanner("Notifications On");
     } else {
       showBanner("Notifications Off");
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      showBanner("No user found.");
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      Alert.alert("Weak Password", "Password must be at least 6 characters.");
+      return;
+    }
+
+    try {
+      await updatePassword(user, newPassword);
+      setPasswordModalVisible(false);
+      setNewPassword("");
+      showBanner("Password Updated ✅");
+    } catch (error: any) {
+      console.error(error.code);
+      if (error.code === "auth/requires-recent-login") {
+        Alert.alert(
+          "Security Timeout",
+          "For your security, please log out and log back in to change your password."
+        );
+      } else {
+        showBanner("Failed to update password.");
+      }
     }
   };
 
@@ -81,11 +115,7 @@ export default function account_settings() {
                 </Pressable>
                 <Pressable
                   style={styles.enterButton}
-                  onPress={() => {
-                    setPasswordModalVisible(false);
-                    setNewPassword("");
-                    showBanner("Password Updated");
-                  }}
+                  onPress={handlePasswordChange}
                 >
                   <Text style={styles.enterButtonText}>Enter</Text>
                 </Pressable>

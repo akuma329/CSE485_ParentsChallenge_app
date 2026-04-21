@@ -1,27 +1,59 @@
 import { useRouter } from "expo-router";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
+import { db } from "../firebaseConfig";
 
 export default function Parents() {
   const router = useRouter();
+  const [canvaLink, setCanvaLink] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLink = async () => {
+      try {
+        const docRef = doc(db, "settings", "canvaLink");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setCanvaLink(docSnap.data().schedule);
+        }
+      } catch (error) {
+        console.error("Error fetching canvaLink:", error);
+      }
+    };
+    fetchLink();
+  }, []);
+
+  const openEmpowermentLink = () => {
+    if (canvaLink) {
+      Linking.openURL(canvaLink);
+    } else {
+      Alert.alert("Loading", "Still fetching the latest schedule. Please try again in a second.");
+    }
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/parent_info" as any)}
+        onPress={() =>
+          Linking.openURL(
+            "https://www.canva.com/design/DAGGnx3Wj7Q/oGDOeHihX-xaIV5lHiNrYA/view?utm_content=DAGGnx3Wj7Q&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h9b6e85cad5",
+          )
+        }
       >
         <Text style={styles.buttonText}>Parents Info</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push("/empowerment_sessions" as any)}
+        onPress={openEmpowermentLink}
       >
         <Text style={styles.buttonText}>Empowerment Sessions</Text>
       </TouchableOpacity>
