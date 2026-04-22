@@ -1,5 +1,5 @@
 //about us page
-//Last edited: 3/16/2026
+//Last edited: 4/21/2026
 //Edited by: Sheneeza
 
 import React, { useState } from "react";
@@ -16,7 +16,7 @@ const aboutUs = () => {
   const makingADifference1 =
     "Founded in 2000 by Steve and Joyce Schuck, Parents Challenge equips families with the tools and resources needed to confidently exercise educational choice and achieve academic success. \n\n Over the past 25 years, Parents Challenge has served more than 4,500 students and their families, distributing over two million dollars in scholarships and grants to ensure that opportunity is never limited by income.\n\nThrough decades of measuring academic outcomes, we have seen that when parents and guardians are empowered and supported, lives change. Students succeed, families grow stronger, and entire communities benefit. \n\nParents Challenge is not just impacting education, it is transforming futures.";
 
-  const ourFoudningPrinciplesBullets = [
+  const ourFoundingPrinciplesBullets = [
     "All children have the right to be educated.",
     "Parents know what is best for their children.",
     "Schools must be accountable to the children and their parents.",
@@ -27,42 +27,6 @@ const aboutUs = () => {
 
   const chronicAbsentText = "Our Statistics";
   const proficiencyRateText = "Proficiency Rate";
-
-  //images
-  const Absenteeism = () => {
-    return (
-      <Image
-        style={styles.image}
-        source={require("../assets/images/pc_chronic_absenteeism.png")}
-      />
-    );
-  };
-  const Proficiency = () => {
-    return (
-      <Image
-        style={styles.image}
-        source={require("../assets/images/pc_proficiency_rate.png")}
-      />
-    );
-  };
-
-  const Familiesserved = () => {
-    return (
-      <Image
-        style={styles.image}
-        source={require("../assets/images/familiesserved.png")}
-      />
-    );
-  };
-
-  const Mathreadingstats = () => {
-    return (
-      <Image
-        style={styles.image}
-        source={require("../assets/images/mathreadingstats.png")}
-      />
-    );
-  };
 
   //display
   return (
