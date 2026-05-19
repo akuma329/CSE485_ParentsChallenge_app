@@ -1,5 +1,6 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,8 +9,12 @@ import {
   View,
 } from "react-native";
 import { auth } from "../firebaseConfig";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function Login() {
+  const { isSpanish } = useContext(LanguageContext);
+
   const [isCreateAccount, setIsCreateAccount] = useState(false);
 
   // Login fields
@@ -23,6 +28,66 @@ export default function Login() {
   const [signupCode, setSignupCode] = useState("");
 
   const [statusMessage, setStatusMessage] = useState("");
+
+  const titleLogin = isSpanish
+    ? translations.es.loginTitleLogin
+    : translations.en.loginTitleLogin;
+
+  const titleCreate = isSpanish
+    ? translations.es.loginTitleCreate
+    : translations.en.loginTitleCreate;
+
+  const usernamePlaceholder = isSpanish
+    ? translations.es.loginUsernamePlaceholder
+    : translations.en.loginUsernamePlaceholder;
+
+  const emailPlaceholder = isSpanish
+    ? translations.es.loginEmailPlaceholder
+    : translations.en.loginEmailPlaceholder;
+
+  const passwordPlaceholder = isSpanish
+    ? translations.es.loginPasswordPlaceholder
+    : translations.en.loginPasswordPlaceholder;
+
+  const authCodePlaceholder = isSpanish
+    ? translations.es.loginAuthCodePlaceholder
+    : translations.en.loginAuthCodePlaceholder;
+
+  const createAccountButton = isSpanish
+    ? translations.es.loginCreateAccountButton
+    : translations.en.loginCreateAccountButton;
+
+  const loginButton = isSpanish
+    ? translations.es.loginButton
+    : translations.en.loginButton;
+
+  const alreadyAccountText = isSpanish
+    ? translations.es.loginAlreadyAccountText
+    : translations.en.loginAlreadyAccountText;
+
+  const needAccountText = isSpanish
+    ? translations.es.loginNeedAccountText
+    : translations.en.loginNeedAccountText;
+
+  const fillFieldsText = isSpanish
+    ? translations.es.loginFillFieldsText
+    : translations.en.loginFillFieldsText;
+
+  const accountCreatedText = isSpanish
+    ? translations.es.loginAccountCreatedText
+    : translations.en.loginAccountCreatedText;
+
+  const emailInUseText = isSpanish
+    ? translations.es.loginEmailInUseText
+    : translations.en.loginEmailInUseText;
+
+  const weakPasswordText = isSpanish
+    ? translations.es.loginWeakPasswordText
+    : translations.en.loginWeakPasswordText;
+
+  const signupFailedText = isSpanish
+    ? translations.es.loginSignupFailedText
+    : translations.en.loginSignupFailedText;
 
   //make the function asynchronous to ensure login doesn't freeze the app
   /*const handleLogin = async () => {
@@ -52,13 +117,15 @@ export default function Login() {
       setStatusMessage("Please fill out all fields.");
     }
   };*/
- const handleLogin = async () => {
-  if (loginEmail.trim() && loginPassword.trim()) {
-    router.replace("/uplanding");
-  } else {
-    setStatusMessage("Please fill out all fields.");
-  }
-};
+
+  const handleLogin = async () => {
+    if (loginEmail.trim() && loginPassword.trim()) {
+      router.replace("/uplanding");
+    } else {
+      setStatusMessage(fillFieldsText);
+    }
+  };
+
   const handleCreateAccount = async () => {
     if (
       signupUsername.trim() &&
@@ -66,50 +133,49 @@ export default function Login() {
       signupPassword.trim() &&
       signupCode.trim()
     ) {
-      
       try {
-        //create a user 
-        const userCredential = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
-
+        //create a user
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          signupEmail,
+          signupPassword,
+        );
 
         //add username to firebase profile
         await updateProfile(userCredential.user, {
-          displayName: signupUsername
+          displayName: signupUsername,
         });
 
         console.log("Account created for: ", signupUsername);
-        
+
         // Clear signup fields
         setSignupUsername("");
         setSignupEmail("");
         setSignupPassword("");
         setSignupCode("");
-              
+
         // Show success and switch back to login
-        setStatusMessage("Account created! Please log in.");
+        setStatusMessage(accountCreatedText);
         setIsCreateAccount(false);
-      }
-      catch (error : any) {
-        if (error.code === 'auth/email-already-in-use') {
-          setStatusMessage("That email is already in use");
-        }
-        else if (error.code === 'auth/weak-password') {
-          setStatusMessage("Password should be at least 6 characters");
-        }
-        else {
-          setStatusMessage("Signup failed. Please check connection and try again.");
+      } catch (error: any) {
+        if (error.code === "auth/email-already-in-use") {
+          setStatusMessage(emailInUseText);
+        } else if (error.code === "auth/weak-password") {
+          setStatusMessage(weakPasswordText);
+        } else {
+          setStatusMessage(signupFailedText);
         }
         console.error(error.code);
       }
     } else {
-      setStatusMessage("Please fill out all fields.");
+      setStatusMessage(fillFieldsText);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        {isCreateAccount ? "Create an Account" : "Login"}
+        {isCreateAccount ? titleCreate : titleLogin}
       </Text>
 
       {statusMessage !== "" && (
@@ -120,13 +186,13 @@ export default function Login() {
         <>
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            placeholder={usernamePlaceholder}
             value={signupUsername}
             onChangeText={setSignupUsername}
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            placeholder={emailPlaceholder}
             value={signupEmail}
             onChangeText={setSignupEmail}
             autoCapitalize="none"
@@ -134,14 +200,14 @@ export default function Login() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={passwordPlaceholder}
             value={signupPassword}
             onChangeText={setSignupPassword}
             secureTextEntry
           />
           <TextInput
             style={styles.input}
-            placeholder="Authentication Code"
+            placeholder={authCodePlaceholder}
             value={signupCode}
             onChangeText={setSignupCode}
           />
@@ -150,14 +216,14 @@ export default function Login() {
             style={styles.primaryButton}
             onPress={handleCreateAccount}
           >
-            <Text style={styles.primaryButtonText}>Create Account</Text>
+            <Text style={styles.primaryButtonText}>{createAccountButton}</Text>
           </TouchableOpacity>
         </>
       ) : (
         <>
           <TextInput
             style={styles.input}
-            placeholder="Username or Email"
+            placeholder={emailPlaceholder}
             value={loginEmail}
             onChangeText={setLoginEmail}
             autoCapitalize="none"
@@ -165,14 +231,14 @@ export default function Login() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder={passwordPlaceholder}
             value={loginPassword}
             onChangeText={setLoginPassword}
             secureTextEntry
           />
 
           <TouchableOpacity style={styles.primaryButton} onPress={handleLogin}>
-            <Text style={styles.primaryButtonText}>Login</Text>
+            <Text style={styles.primaryButtonText}>{loginButton}</Text>
           </TouchableOpacity>
         </>
       )}
@@ -185,9 +251,7 @@ export default function Login() {
         }}
       >
         <Text style={styles.secondaryButtonText}>
-          {isCreateAccount
-            ? "Already have an account? Login"
-            : "Need an account? Create one"}
+          {isCreateAccount ? alreadyAccountText : needAccountText}
         </Text>
       </TouchableOpacity>
     </View>

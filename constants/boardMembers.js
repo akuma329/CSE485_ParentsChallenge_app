@@ -195,6 +195,6 @@ After being term-limited from the Colorado General Assembly in 2016, Bill transi
 In 2019, Bill established Capitol Advantage, operating as an independent Public Affairs Consultant. Drawing on decades of relationships across Colorado’s political, business, and civic communities, he provided strategic counsel to clients navigating state government and public affairs.
 
 Since 2021, Bill has served as CEO of The Schuck Initiatives, continuing his work at the intersection of public policy, advocacy, and community investment.`,
-    image: require("../assets/board/bill.jpg"),
+    // image: require("../assets/board/bill.jpg"),
   },
 ];

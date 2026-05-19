@@ -1,7 +1,22 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useContext } from "react";
+import {
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function Contact() {
+  const { isSpanish } = useContext(LanguageContext);
+
+  const contactTitle = isSpanish
+    ? translations.es.contactTitle
+    : translations.en.contactTitle;
+
   const socialLinks = [
     {
       name: "logo-facebook",
@@ -46,7 +61,7 @@ export default function Contact() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Contact Us</Text>
+      <Text style={styles.title}>{contactTitle}</Text>
 
       <View style={styles.iconRow}>
         {socialLinks.map((link) => (

@@ -1,9 +1,18 @@
-import { View, Text, StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function Board() {
+  const { isSpanish } = useContext(LanguageContext);
+
+  const boardText = isSpanish
+    ? translations.es.boardPageText
+    : translations.en.boardPageText;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Board Page</Text>
+      <Text style={styles.text}>{boardText}</Text>
     </View>
   );
 }

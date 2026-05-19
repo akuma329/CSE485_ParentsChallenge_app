@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import React, { useContext } from "react";
 import {
   Linking,
   StyleSheet,
@@ -6,9 +7,25 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function Parents() {
   const router = useRouter();
+
+  const { isSpanish } = useContext(LanguageContext);
+
+  const parentsInfoText = isSpanish
+    ? translations.es.parentsInfoText
+    : translations.en.parentsInfoText;
+
+  const empowermentSessionsText = isSpanish
+    ? translations.es.parentsEmpowermentSessionsText
+    : translations.en.parentsEmpowermentSessionsText;
+
+  const videosText = isSpanish
+    ? translations.es.parentsVideosText
+    : translations.en.parentsVideosText;
 
   return (
     <View style={styles.container}>
@@ -20,14 +37,14 @@ export default function Parents() {
           )
         }
       >
-        <Text style={styles.buttonText}>Parents Info</Text>
+        <Text style={styles.buttonText}>{parentsInfoText}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => router.push("/empowerment_sessions" as any)}
       >
-        <Text style={styles.buttonText}>Empowerment Sessions</Text>
+        <Text style={styles.buttonText}>{empowermentSessionsText}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -38,7 +55,7 @@ export default function Parents() {
           )
         }
       >
-        <Text style={styles.buttonText}>Videos</Text>
+        <Text style={styles.buttonText}>{videosText}</Text>
       </TouchableOpacity>
     </View>
   );

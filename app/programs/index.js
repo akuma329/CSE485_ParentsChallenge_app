@@ -59,6 +59,14 @@ const activityCards = [
   },
 ];
 
+/*
+
+For PARENTS CHALLENGE staff:
+
+edit the number values within the quotes to change the income criteria displayed on the page
+
+*/
+
 const incomeCriteria = [
   "2 people: $36,482",
   "3 people: $45,991",

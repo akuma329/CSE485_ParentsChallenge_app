@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Modal,
   Pressable,
@@ -7,12 +7,17 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function account_settings() {
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [notificationsOn, setNotificationsOn] = useState(true);
   const [bannerMessage, setBannerMessage] = useState("");
+
+  const { isSpanish, setIsSpanish } = useContext(LanguageContext);
+  const text = isSpanish ? translations.es : translations.en;
 
   const showBanner = (message: string) => {
     setBannerMessage(message);
@@ -26,15 +31,15 @@ export default function account_settings() {
     setNotificationsOn(newValue);
 
     if (newValue) {
-      showBanner("Notifications On");
+      showBanner(text.notificationsOnMessage);
     } else {
-      showBanner("Notifications Off");
+      showBanner(text.notificationsOffMessage);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Account Settings</Text>
+      <Text style={styles.title}>{text.settingsTitle}</Text>
 
       {bannerMessage !== "" && (
         <View style={styles.banner}>
@@ -43,51 +48,54 @@ export default function account_settings() {
       )}
 
       <View>
-        <Pressable style={styles.button}>
-          <Text style={styles.buttonText}>
-            Change Language {"\n"}Cambiar Idioma
-          </Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => setIsSpanish(!isSpanish)}
+        >
+          <Text style={styles.buttonText}>{text.changeLanguage}</Text>
         </Pressable>
 
+        {/* PARENTS CHALLENGE STAFF: The following code block is for notifications button, should the feature be implemented
+        
         <Pressable style={styles.button} onPress={handleNotifications}>
           <Text style={styles.buttonText}>
             {notificationsOn
-              ? "Turn Notifications Off"
-              : "Turn Notifications On"}
+              ? text.notificationsOffButton
+              : text.notificationsOnButton}
           </Text>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable
           style={styles.button}
           onPress={() => setPasswordModalVisible(true)}
         >
-          <Text style={styles.buttonText}>Change User Password</Text>
+          <Text style={styles.buttonText}>{text.changePassword}</Text>
         </Pressable>
 
         <Modal visible={passwordModalVisible} transparent={true}>
           <View style={styles.modalContainer}>
             <View style={styles.modalBox}>
-              <Text>Enter New Password</Text>
+              <Text>{text.enterNewPassword}</Text>
               <TextInput
                 style={styles.input}
                 value={newPassword}
                 onChangeText={setNewPassword}
-                placeholder="New password"
+                placeholder={text.newPasswordPlaceholder}
                 secureTextEntry={true}
               />
               <View style={styles.modalButtons}>
                 <Pressable onPress={() => setPasswordModalVisible(false)}>
-                  <Text>Cancel</Text>
+                  <Text>{text.cancel}</Text>
                 </Pressable>
                 <Pressable
                   style={styles.enterButton}
                   onPress={() => {
                     setPasswordModalVisible(false);
                     setNewPassword("");
-                    showBanner("Password Updated");
+                    showBanner(text.passwordUpdated);
                   }}
                 >
-                  <Text style={styles.enterButtonText}>Enter</Text>
+                  <Text style={styles.enterButtonText}>{text.enter}</Text>
                 </Pressable>
               </View>
             </View>

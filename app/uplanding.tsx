@@ -1,28 +1,53 @@
 import { router } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import {
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function UPLanding() {
+  const { isSpanish } = useContext(LanguageContext);
+
   const parentName = "[Parent Name]";
+
+  const helloText = isSpanish
+    ? translations.es.upLandingHelloText
+    : translations.en.upLandingHelloText;
+
+  const viewFormsText = isSpanish
+    ? translations.es.upLandingViewFormsText
+    : translations.en.upLandingViewFormsText;
+
+  const eventScheduleText = isSpanish
+    ? translations.es.upLandingEventScheduleText
+    : translations.en.upLandingEventScheduleText;
+
+  const accountSettingsText = isSpanish
+    ? translations.es.upLandingAccountSettingsText
+    : translations.en.upLandingAccountSettingsText;
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Back button row */}
       <View style={styles.topRow}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
           <Text style={styles.backText}>{"<"}</Text>
         </TouchableOpacity>
       </View>
 
       {/* Greeting banner */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>Hello, {parentName}!</Text>
+        <Text style={styles.headerText}>
+          {helloText}, {parentName}!
+        </Text>
       </View>
 
       {/* Buttons */}
@@ -31,21 +56,21 @@ export default function UPLanding() {
           style={styles.cardButton}
           onPress={() => router.push("/forms")}
         >
-          <Text style={styles.cardText}>View Forms</Text>
+          <Text style={styles.cardText}>{viewFormsText}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.cardButton}
           onPress={() => router.push("/event_schedule")}
         >
-          <Text style={styles.cardText}>My Event Schedule</Text>
+          <Text style={styles.cardText}>{eventScheduleText}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.cardButton}
           onPress={() => router.push("/account_settings")}
         >
-          <Text style={styles.cardText}>Account Settings</Text>
+          <Text style={styles.cardText}>{accountSettingsText}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

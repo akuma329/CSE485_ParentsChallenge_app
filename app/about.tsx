@@ -2,19 +2,40 @@
 //Last edited: 3/16/2026
 //Edited by: Sheneeza
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 const aboutUs = () => {
-  const [titleText, setTitleText] = useState("About Us");
-  const [whoWeAreText, setWhoWeAreText] = useState("The Mission");
-  const missionText =
-    "Parents Challenge disrupts the legacy of educational failure by empowering parents. We provide our families with information, training, mentoring, tools, and financial resources to equip them to choose the education they think best for their children.";
-  const [backButton, setBackButton] = useState(false);
+  const { isSpanish } = useContext(LanguageContext);
 
-  const makingADifference1 =
-    "Founded in 2000 by Steve and Joyce Schuck, Parents Challenge equips families with the tools and resources needed to confidently exercise educational choice and achieve academic success. \n\n Over the past 25 years, Parents Challenge has served more than 4,500 students and their families, distributing over two million dollars in scholarships and grants to ensure that opportunity is never limited by income.\n\nThrough decades of measuring academic outcomes, we have seen that when parents and guardians are empowered and supported, lives change. Students succeed, families grow stronger, and entire communities benefit. \n\nParents Challenge is not just impacting education, it is transforming futures.";
+  const titleText = isSpanish
+    ? translations.es.aboutTitleText
+    : translations.en.aboutTitleText;
+
+  const whoWeAreText = isSpanish
+    ? translations.es.aboutWhoWeAreText
+    : translations.en.aboutWhoWeAreText;
+
+  const missionText = isSpanish
+    ? translations.es.aboutMissionText
+    : translations.en.aboutMissionText;
+
+  const makingADifference1 = isSpanish
+    ? translations.es.aboutMakingADifference1
+    : translations.en.aboutMakingADifference1;
+
+  const chronicAbsentText = isSpanish
+    ? translations.es.aboutChronicAbsentText
+    : translations.en.aboutChronicAbsentText;
+
+  const proficiencyRateText = isSpanish
+    ? translations.es.aboutProficiencyRateText
+    : translations.en.aboutProficiencyRateText;
+
+  const [backButton, setBackButton] = useState(false);
 
   const ourFoudningPrinciplesBullets = [
     "All children have the right to be educated.",
@@ -25,9 +46,6 @@ const aboutUs = () => {
     "Most importantly, we are committed to making these beliefs real and available to families in Colorado Springs and, ultimately, across the country.",
   ];
 
-  const chronicAbsentText = "Our Statistics";
-  const proficiencyRateText = "Proficiency Rate";
-
   //images
   const Absenteeism = () => {
     return (
@@ -37,6 +55,7 @@ const aboutUs = () => {
       />
     );
   };
+
   const Proficiency = () => {
     return (
       <Image

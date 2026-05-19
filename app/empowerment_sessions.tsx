@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Linking,
   Pressable,
@@ -7,8 +7,40 @@ import {
   Text,
   View,
 } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function empowerment_sessions() {
+  const { isSpanish } = useContext(LanguageContext);
+
+  const titleText = isSpanish
+    ? translations.es.empowermentTitle
+    : translations.en.empowermentTitle;
+
+  const calendarButtonText = isSpanish
+    ? translations.es.empowermentCalendarButton
+    : translations.en.empowermentCalendarButton;
+
+  const donorViewButtonText = isSpanish
+    ? translations.es.empowermentDonorViewButton
+    : translations.en.empowermentDonorViewButton;
+
+  const sectionTitle = isSpanish
+    ? translations.es.empowermentSectionTitle
+    : translations.en.empowermentSectionTitle;
+
+  const dateText = isSpanish
+    ? translations.es.empowermentDateText
+    : translations.en.empowermentDateText;
+
+  const timeText = isSpanish
+    ? translations.es.empowermentTimeText
+    : translations.en.empowermentTimeText;
+
+  const locationText = isSpanish
+    ? translations.es.empowermentLocationText
+    : translations.en.empowermentLocationText;
+
   const registeredSessions = [
     {
       title: "Family Empowerment Workshop",
@@ -30,24 +62,30 @@ export default function empowerment_sessions() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Empowerment Sessions</Text>
+      <Text style={styles.title}>{titleText}</Text>
 
       <Pressable style={styles.button} onPress={openCalendar}>
-        <Text style={styles.buttonText}>View Full Session Calendar</Text>
+        <Text style={styles.buttonText}>{calendarButtonText}</Text>
       </Pressable>
 
       <Pressable style={styles.button} onPress={openDonorView}>
-        <Text style={styles.buttonText}>Register in DonorView</Text>
+        <Text style={styles.buttonText}>{donorViewButtonText}</Text>
       </Pressable>
 
-      <Text style={styles.sectionTitle}>Your Upcoming Registered Sessions</Text>
+      <Text style={styles.sectionTitle}>{sectionTitle}</Text>
 
       {registeredSessions.map((session, index) => (
         <View key={index} style={styles.sessionBox}>
           <Text style={styles.sessionTitle}>{session.title}</Text>
-          <Text style={styles.sessionText}>Date: {session.date}</Text>
-          <Text style={styles.sessionText}>Time: {session.time}</Text>
-          <Text style={styles.sessionText}>Location: {session.location}</Text>
+          <Text style={styles.sessionText}>
+            {dateText}: {session.date}
+          </Text>
+          <Text style={styles.sessionText}>
+            {timeText}: {session.time}
+          </Text>
+          <Text style={styles.sessionText}>
+            {locationText}: {session.location}
+          </Text>
         </View>
       ))}
     </ScrollView>

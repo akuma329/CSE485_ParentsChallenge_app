@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Image,
   Linking,
@@ -10,10 +10,58 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { LanguageContext } from "../LanguageContext";
+import { translations } from "../translations";
 
 export default function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+
+  const { isSpanish } = useContext(LanguageContext);
+
+  const loginText = isSpanish
+    ? translations.es.homeLoginText
+    : translations.en.homeLoginText;
+
+  const parentsText = isSpanish
+    ? translations.es.homeParentsText
+    : translations.en.homeParentsText;
+
+  const schoolsText = isSpanish
+    ? translations.es.homeSchoolsText
+    : translations.en.homeSchoolsText;
+
+  const resourcesText = isSpanish
+    ? translations.es.homeResourcesText
+    : translations.en.homeResourcesText;
+
+  const contactText = isSpanish
+    ? translations.es.homeContactText
+    : translations.en.homeContactText;
+
+  const settingsText = isSpanish
+    ? translations.es.homeSettingsText
+    : translations.en.homeSettingsText;
+
+  const bannerText = isSpanish
+    ? translations.es.homeBannerText
+    : translations.en.homeBannerText;
+
+  const aboutText = isSpanish
+    ? translations.es.homeAboutText
+    : translations.en.homeAboutText;
+
+  const boardText = isSpanish
+    ? translations.es.homeBoardText
+    : translations.en.homeBoardText;
+
+  const eventsText = isSpanish
+    ? translations.es.homeEventsText
+    : translations.en.homeEventsText;
+
+  const programsText = isSpanish
+    ? translations.es.homeProgramsText
+    : translations.en.homeProgramsText;
 
   return (
     <View style={styles.container}>
@@ -26,18 +74,18 @@ export default function Index() {
           style={styles.loginButton}
           onPress={() => router.push("/login" as any)}
         >
-          <Text style={styles.loginText}>Login</Text>
+          <Text style={styles.loginText}>{loginText}</Text>
         </TouchableOpacity>
       </View>
 
       {menuOpen && (
         <View style={styles.menu}>
           {[
-            { name: "Parents", route: "/parents" },
-            { name: "Schools", route: "/schools" },
-            { name: "Resources", route: "/resources" },
-            { name: "Contact Us", route: "/contact" },
-            { name: "Settings", route: "/account_settings" },
+            { name: parentsText, route: "/parents" },
+            { name: schoolsText, route: "/schools" },
+            { name: resourcesText, route: "/resources" },
+            { name: contactText, route: "/contact" },
+            { name: settingsText, route: "/account_settings" },
           ].map((item) => (
             <TouchableOpacity
               key={item.name}
@@ -60,11 +108,7 @@ export default function Index() {
       />
 
       <LinearGradient colors={["#6696AB", "#3F6F80"]} style={styles.banner}>
-        <Text style={styles.bannerText}>
-          We see a tomorrow where all children have access to a quality
-          education that meets their individual needs and prepares them to be
-          productive, contributing citizens.
-        </Text>
+        <Text style={styles.bannerText}>{bannerText}</Text>
       </LinearGradient>
 
       <View style={styles.buttonGrid}>
@@ -72,14 +116,14 @@ export default function Index() {
           style={styles.button}
           onPress={() => router.push("/about")}
         >
-          <Text style={styles.buttonText}>About Us</Text>
+          <Text style={styles.buttonText}>{aboutText}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.push("/board")}
         >
-          <Text style={styles.buttonText}>Board</Text>
+          <Text style={styles.buttonText}>{boardText}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -88,14 +132,14 @@ export default function Index() {
             Linking.openURL("https://parentschallenge.org/events-activities/")
           }
         >
-          <Text style={styles.buttonText}>Events</Text>
+          <Text style={styles.buttonText}>{eventsText}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => router.push("/programs")}
         >
-          <Text style={styles.buttonText}>Our Programs</Text>
+          <Text style={styles.buttonText}>{programsText}</Text>
         </TouchableOpacity>
       </View>
     </View>
