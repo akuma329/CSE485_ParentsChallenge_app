@@ -1,5 +1,5 @@
 //about us page
-//Last edited: 3/16/2026
+//Last edited: 4/21/2026
 //Edited by: Sheneeza
 
 import React, { useContext, useState } from "react";
@@ -37,7 +37,7 @@ const aboutUs = () => {
 
   const [backButton, setBackButton] = useState(false);
 
-  const ourFoudningPrinciplesBullets = [
+  const ourFoundingPrinciplesBullets = [
     "All children have the right to be educated.",
     "Parents know what is best for their children.",
     "Schools must be accountable to the children and their parents.",
@@ -82,6 +82,8 @@ const aboutUs = () => {
       />
     );
   };
+  const chronicAbsentText = "Our Statistics";
+  const proficiencyRateText = "Proficiency Rate";
 
   //display
   return (
